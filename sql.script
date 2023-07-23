@@ -1,0 +1,31 @@
+v) SELECT DISTINCT MIN(M.name) AS ministry_name,
+                F.name AS facility_name,
+                F.city,
+                C.firstName,
+                C.lastName,
+                C.email
+FROM Facilities F
+JOIN Ministries M ON F.ministry_ID = M.ministry_ID
+JOIN Employees E ON E.facility_ID = F.facility_ID 
+JOIN Citizens C ON E.medicareNumber = C.medicareNumber
+LEFT JOIN InfectedBy I ON C.medicareNumber = I.medicareNumber
+LEFT JOIN TookVaccine TV ON C.medicareNumber = TV.medicareNumber
+WHERE I.infectionID IS NOT NULL AND TV.vaccineID IS NULL
+ORDER BY ministry_name ASC, F.city ASC, facility_name ASC;
+
+
+vi) SELECT MIN(M.name) AS ministry_name,
+       F.name AS facility_name,
+       F.city,
+       C.firstName || ' ' || C.lastName AS principle_name
+FROM Facilities F
+JOIN Ministries M ON F.ministry_ID = M.ministry_ID
+LEFT JOIN Employees E ON E.facility_ID = F.facility_ID
+LEFT JOIN Citizens C ON E.medicareNumber = C.medicareNumber
+LEFT JOIN Students S ON F.facility_ID = S.facility_ID
+LEFT JOIN InfectedBy I ON E.medicareNumber = I.medicareNumber
+LEFT JOIN InfectedBy I2 ON S.medicareNumber = I2.medicareNumber
+WHERE I.infectionID IS NULL AND I2.infectionID IS NULL
+GROUP BY F.facility_ID, F.name, F.city, C.firstName, C.lastName
+ORDER BY ministry_name ASC, F.city ASC, facility_name ASC;
+
