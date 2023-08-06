@@ -766,18 +766,3 @@ ORDER BY
     e.role ASC,
     c.firstName ASC,
     c.lastName ASC;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Query 
