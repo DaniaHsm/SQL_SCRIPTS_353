@@ -664,3 +664,82 @@ ORDER BY
 -- left join: all rows of left table [x] rows in right that are in left table
 -- because we want every scenario so:
 -- Infections with No infection instance records /  Ministries with No Infections/ Infections with No Stude
+
+-----------------------------------------------------------------
+
+Q-16
+
+SELECT
+    c.firstName AS minister_first_name,
+    c.lastName AS minister_last_name,
+    c.city AS minister_city,
+    COUNT(DISTINCT CASE WHEN f.facilityType = 'Management' THEN f.facility_ID END) AS total_management_facilities,
+    COUNT(DISTINCT CASE WHEN f.facilityType = 'Educational' THEN f.facility_ID END) AS total_educational_facilities
+FROM
+    Ministries m
+JOIN
+    Facilities f ON m.ministry_ID = f.ministry_ID
+JOIN
+    EmployeeSchedule es ON f.facility_ID = es.facility_ID
+JOIN
+    Employees e ON es.employee_ID = e.employee_ID
+JOIN
+    Citizens c ON e.medicareNumber = c.medicareNumber
+GROUP BY
+    m.ministry_ID,
+    c.firstName,
+    c.lastName,
+    c.city
+ORDER BY
+    c.city ASC,
+    total_educational_facilities DESC;
+
+Q-17
+
+SELECT
+    c.firstName,
+    c.lastName,
+    c.birthDate,
+    c.email,
+    e.role,
+    MIN(es.startTime) AS first_day_of_work,
+    COUNT(DISTINCT i.infectionInstanceID) AS total_infections,
+    SUM(HOUR(TIMEDIFF(es.endTime, es.startTime))) AS total_hours_scheduled
+FROM
+    Citizens c
+JOIN
+    Employees e ON c.medicareNumber = e.medicareNumber
+JOIN
+    EmployeeSchedule es ON e.employee_ID = es.employee_ID
+LEFT JOIN
+    InfectedBy i ON c.medicareNumber = i.medicareNumber
+WHERE
+    e.role= 'Teacher' -- Only consider counselors with roles elementary or secondary
+GROUP BY
+    c.medicareNumber,
+    c.firstName,
+    c.lastName,
+    c.birthDate,
+    c.email,
+    e.role
+HAVING
+    COUNT(DISTINCT i.infectionInstanceID) >= 0 -- Filter counselors with at least three infections
+ORDER BY
+    e.role ASC,
+    c.firstName ASC,
+    c.lastName ASC;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Query 
