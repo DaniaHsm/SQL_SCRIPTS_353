@@ -66,12 +66,33 @@ CREATE TABLE Students (
 
 Create Table Employees (
 medicareNumber INT PRIMARY KEY,
-facility_ID INT,
-employeeID INT UNIQUE,
+employee_ID INT UNIQUE,
 role VARCHAR(250),
 specialization VARCHAR(250),
-FOREIGN KEY (facility_ID) REFERENCES Facilities(facility_ID),
+additionalRole VARCHAR(250),
 FOREIGN KEY (medicareNumber) REFERENCES Citizens(medicareNumber)
+);
+
+CREATE TABLE EmployeeSchedule (
+schedule_ID INT PRIMARY KEY AUTO_INCREMENT,
+employee_ID INT,
+facility_ID INT,
+task VARCHAR(250),
+startTime DATETIME,
+endTime DATETIME,
+FOREIGN KEY (facility_ID) REFERENCES Facilities(facility_ID),
+FOREIGN KEY (employee_ID) REFERENCES Employees(employee_ID)
+);
+
+CREATE TABLE LogEmail (
+email_ID INT PRIMARY KEY AUTO_INCREMENT,
+date DATE,
+facility_ID INT,
+employee_ID INT,
+subject VARCHAR(80),
+body VARCHAR(80),
+FOREIGN KEY (facility_ID) REFERENCES Facilities(facility_ID),
+FOREIGN KEY (employee_ID) REFERENCES Employees(employee_ID)
 );
 
 Create Table TookVaccine ( 
@@ -307,63 +328,70 @@ VALUES
     (23, 23, 31, 'Grade 5'),
     (24, 24, 32, 'Grade 9'),
     (25, 25, 33, 'Grade 7');
-INSERT INTO Employees (medicareNumber, facility_ID, employeeID, role, specialization)
+    
+INSERT INTO Employees (medicareNumber, employee_ID, role, specialization, additionalRole)
 VALUES 
-/*President of head office(minister)*/
-(51, 1, 1, 'President', NULL),
-(52, 4, 2, 'President', NULL),
-(53, 7, 3, 'President', NULL),
-(54, 10, 4, 'President', NULL),
-(55, 13, 5, 'President', NULL),
-(56, 16, 6, 'President', NULL),
-(57, 19, 7, 'President', NULL),
-(58, 22, 8, 'President', NULL),
-(59, 25, 9, 'President', NULL),
-(60, 28, 10, 'President', NULL),
+/*President of head office (minister)*/
+(51, 1, 'President', NULL, 'Additional Role 1'), -- QUERY 10
+(52, 2, 'President', NULL, 'Additional Role 2'),
+(53, 3, 'President', NULL, 'Additional Role 3'),
+(54, 4, 'President', NULL, 'Additional Role 4'),
+(55, 5, 'President', NULL, 'Additional Role 5'),
+(56, 6, 'President', NULL, 'Additional Role 6'),
+(57, 7, 'President', NULL, 'Additional Role 7'),
+(58, 8, 'President', NULL, 'Additional Role 8'),
+(59, 9, 'President', NULL, 'Additional Role 9'),
+(60, 10, 'President', NULL, 'Additional Role 10'),
 
 /*Principals of education facility*/
-(61, 2, 11, 'Principal', NULL),
-(62, 3, 12, 'Principal', NULL),
-(63, 5, 13, 'Principal', NULL),
-(64, 6, 14, 'Principal', NULL),
-(65, 8, 15, 'Principal', NULL),
-(66, 9, 16, 'Principal', NULL),
-(67, 11, 17, 'Principal', NULL),
-(68, 12, 18, 'Principal', NULL),
-(69, 14, 19, 'Principal', NULL),
-(70, 15, 20, 'Principal', NULL),
-(71, 17, 21, 'Principal', NULL),
-(72, 18, 22, 'Principal', NULL),
-(73, 20, 23, 'Principal', NULL),
-(74, 21, 24, 'Principal', NULL),
-(75, 23, 25, 'Principal', NULL),
-(76, 24, 26, 'Principal', NULL),
-(77, 26, 27, 'Principal', NULL),
-(78, 27, 28, 'Principal', NULL),
-(79, 29, 29, 'Principal', NULL),
-(80, 30, 30, 'Principal', NULL),
+(61, 11, 'Principal', NULL, 'Additional Role 11'),
+(62, 12, 'Principal', NULL, 'Additional Role 12'),
+(63, 13, 'Principal', NULL, 'Additional Role 13'),
+(64, 14, 'Principal', NULL, 'Additional Role 14'),
+(65, 15, 'Principal', NULL, 'Additional Role 15'),
+(66, 16, 'Principal', NULL, 'Additional Role 16'),
+(67, 17, 'Principal', NULL, 'Additional Role 17'),
+(68, 18, 'Principal', NULL, 'Additional Role 18'),
+(69, 19, 'Principal', NULL, 'Additional Role 19'),
+(70, 20, 'Principal', NULL, 'Additional Role 20'),
 
 /*Teachers*/
-(81, 2, 31, 'Teacher', 'Math'),
-(82, 3, 32, 'Teacher', 'French'),
-(83, 5, 33, 'Teacher', 'Science'),
-(84, 6, 34, 'Teacher', 'English'),
-(85, 8, 35, 'Teacher', 'History'),
-(86, 9, 36, 'Teacher', 'Music'),
-(87, 11, 37, 'Teacher', 'Art'),
-(88, 12, 38, 'Teacher', 'Physical Education'),
-(89, 14, 39, 'Teacher', 'Biology'),
-(90, 15, 40, 'Teacher', 'Chemistry'),
-(91, 17, 41, 'Teacher', 'Physics'),
-(92, 18, 42, 'Teacher', 'Computer Science'),
-(93, 20, 43, 'Teacher', 'Geography'),
-(94, 21, 44, 'Teacher', 'Economics'),
-(95, 23, 45, 'Teacher', 'Psychology'),
-(96, 24, 46, 'Teacher', 'Sociology'),
-(97, 26, 47, 'Teacher', 'Physical Education'),
-(98, 27, 48, 'Teacher', 'English'),
-(99, 29, 49, 'Teacher', 'Math'),
-(100, 30, 50, 'Teacher', 'French');
+(71, 21, 'Teacher', 'Math', 'Additional Role 21'), 
+(72, 22, 'Teacher', 'French', 'Additional Role 22'),
+(73, 23, 'Teacher', 'Science', 'Additional Role 23'),
+(74, 24, 'Teacher', 'English', 'Additional Role 24'),
+(75, 25, 'Teacher', 'History', 'Additional Role 25'),
+(76, 26, 'Teacher', 'Music', 'Additional Role 26'),
+(77, 27, 'Teacher', 'Art', 'Additional Role 27'),
+(78, 28, 'Teacher', 'Physical Education', 'Additional Role 28'),
+(79, 29, 'Teacher', 'Biology', 'Additional Role 29'),
+(80, 30, 'Teacher', 'Chemistry', 'Additional Role 30'),
+
+/*More Teachers*/
+(81, 31, 'Teacher', 'Physics', 'Additional Role 31'),
+(82, 32, 'Teacher', 'Computer Science', 'Additional Role 32'),
+(83, 33, 'Teacher', 'Geography', 'Additional Role 33'),
+(84, 34, 'Teacher', 'Economics', 'Additional Role 34'),
+(85, 35, 'Teacher', 'Psychology', 'Additional Role 35'),
+(86, 36, 'Teacher', 'Sociology', 'Additional Role 36'),
+(87, 37, 'Teacher', 'Physical Education', 'Additional Role 37'),
+(88, 38, 'Teacher', 'English', 'Additional Role 38'),
+(89, 39, 'Teacher', 'Math', 'Additional Role 39'),
+(90, 40, 'Teacher', 'French', 'Additional Role 40'),
+
+/*More Teachers*/
+(91, 41, 'Teacher', 'Science', 'Additional Role 41'),
+(92, 42, 'Teacher', 'Music', 'Additional Role 42'),
+(93, 43, 'Teacher', 'Art', 'Additional Role 43'),
+(94, 44, 'Teacher', 'Physical Education', 'Additional Role 44'),
+(95, 45, 'Teacher', 'Biology', 'Additional Role 45'),
+(96, 46, 'Teacher', 'Chemistry', 'Additional Role 46'),
+(97, 47, 'Teacher', 'Physics', 'Additional Role 47'),
+(98, 48, 'Teacher', 'Computer Science', 'Additional Role 48'),
+(99, 49, 'Teacher', 'Geography', 'Additional Role 49'),
+(100, 50, 'Teacher', 'Economics', 'Additional Role 50');
+
+/***/
 
 INSERT INTO Infections (infectionID, type)
 VALUES 
@@ -379,7 +407,7 @@ VALUES
 (10, 'Hepatitis B');
 
 INSERT INTO InfectedBy (medicareNumber, infectionID, dateInfected)
-VALUES 
+VALUES /*
 (1, 1, '2023-07-01'),
 (3, 1, '2023-07-02'),
 (5, 1, '2023-07-03'),
@@ -387,7 +415,6 @@ VALUES
 (9, 1, '2023-07-05'),
 (21, 1, '2023-07-05'),
 (22, 1, '2023-07-05'),
-/*Query 4*/
 (23, 1, '2023-07-21'),
 (23, 1, '2023-07-20'),
 (23, 1, '2023-07-19'),
@@ -401,9 +428,9 @@ VALUES
 (81, 1, '2023-07-06'),
 (83, 1, '2023-07-07'),
 (85, 1, '2023-07-08'),
-(87, 1, '2023-07-09'),
-(89, 1, '2023-07-10');
-    
+(87, 1, '2023-07-09'),*/
+(89, 1, '2023-07-31'),
+(89, 1, '2023-07-30');    
 INSERT INTO Vaccines (vaccineID, type)
 VALUES 
 (1, 'Pfizer'),
@@ -432,6 +459,17 @@ VALUES
 (2, 2, '2023-07-08', 86),
 (1, 2, '2023-07-09', 88),
 (3, 1, '2023-07-10', 90);
+
+INSERT INTO EmployeeSchedule (employee_ID, facility_ID, task, startTime, endTime)
+VALUES 
+/*query 10*/
+(1, 1, 'Presides', '2023-07-30 08:00:00', '2023-07-30 17:00:00'),
+(1, 1, 'Presides', '2023-07-31 08:00:00', '2023-07-31 17:00:00');
+
+INSERT INTO LogEmail (date, facility_ID, employee_ID, subject, body)
+VALUES 
+('2023-07-30', 1, 1, 'Schedule', 'Dear Employee, Just a quick update on the ongoing project.'),
+('2023-07-31', 4, 2, 'Schedule', 'Dear Employee, Just a quick update on the ongoing project.');
 
 /*Queries*/
 /*Q1*/
