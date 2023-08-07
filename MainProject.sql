@@ -107,6 +107,8 @@ FOREIGN KEY (vaccineID) REFERENCES Vaccines(vaccineID)
 
 /*Atler tables(When modifications are needed*/
 /*
+DROP TABLE EmployeeSchedule;
+DROP TABLE logEmail;
 DROP TABLE Employees;
 DROP TABLE Students;
 DROP TABLE Facilities;
@@ -133,7 +135,6 @@ VALUES
 
 INSERT INTO Facilities (ministry_ID, name, address, city, phone, postalCode, province, capacity, webAddress, facilityType, subType)
 VALUES 
-     /**/
 	(1, 'NotreDame', '123 Main Street', 'Montreal', '555-123-4567', 'A1B 2C3', 'Quebec', 1000, 'www.notredame.com', 'Management', 'Head office'),
 	(1, 'Rosemont', '1234 Main Street', 'Montreal', '555-153-4567', 'A1B 2C3', 'Quebec', 200, 'www.pointeolivier.com', 'Education', 'Primary'),
 	(1, 'Beaulieu', '1234 Main Street', 'Montreal', '555-153-4567', 'A1B 2C3', 'Quebec', 200, 'www.pointeolivier.com', 'Education', 'secondary'),
@@ -174,10 +175,9 @@ VALUES
 	(10, 'Pointe Olivier', '1234 Main Street', 'Montreal', '555-153-4567', 'A1B 2C3', 'Quebec', 200, 'www.pointeolivier.com', 'Education', 'Primary'),
 	(10, 'Beaulieu', '1234 Main Street', 'Montreal', '555-153-4567', 'A1B 2C3', 'Quebec', 200, 'www.pointeolivier.com', 'Education', 'secondary'),
     
-    /*For query 4 warmup*/
-    (2, 'Rosemont Elementary School', '123 Maple St.', 'Laval', '514-111-1111', 'H2X 3Y4', 'Quebec', 500, 'www.rosemontschool.com', 'Education', 'Elementary School'),
-    (2, 'Laval Secondary School', '456 Oak Ave.', 'Laval', '514-222-2222', 'H3Y 2Z5', 'Quebec', 800, 'www.lavalsecondary.com', 'Education', 'Secondary School'),
-    (2, 'Laval Middle School', '789 Elm Dr.', 'Laval', '514-333-3333', 'H4Z 1A2', 'Quebec', 600, 'www.lavalmiddleschool.com', 'Education', 'Middle School');
+    (2, 'Rosemont Elementary School', '123 Maple St.', 'Laval', '514-111-1111', 'H2X 3Y4', 'Quebec', 500, 'www.rosemontschool.com', 'Education', 'Primary'),
+    (2, 'Laval Secondary School', '456 Oak Ave.', 'Laval', '514-222-2222', 'H3Y 2Z5', 'Quebec', 800, 'www.lavalsecondary.com', 'Education', 'secondary'),
+    (2, 'Laval Middle School', '789 Elm Dr.', 'Laval', '514-333-3333', 'H4Z 1A2', 'Quebec', 600, 'www.lavalmiddleschool.com', 'Education', 'Primary');
 
 INSERT INTO Citizens (medicareNumber, expiryDate, firstName, lastName, birthDate, citizenship, email, province, phone, city, zip, address)
 VALUES 
@@ -283,9 +283,21 @@ VALUES
 (97, '2025-04-30', 'Natalie', 'Foster', '1986-07-07', 'USA', 'natalie.foster@email.com', 'California', '555-999-5555', 'San Diego', '92101', '888 Elm St'),
 (98, '2024-07-31', 'Sebastian', 'Bryant', '1991-08-10', 'USA', 'sebastian.bryant@email.com', 'Texas', '555-111-4444', 'Austin', '73301', '999 Oak St'),
 (99, '2023-10-31', 'Maya', 'Alexander', '1995-05-11', 'USA', 'maya.alexander@email.com', 'Florida', '555-333-7777', 'Miami', '33101', '111 Cedar St'),
-(100, '2024-11-30', 'Grayson', 'Russell', '1998-11-28', 'USA', 'grayson.russell@email.com', 'Illinois', '555-666-5555', 'Chicago', '60601', '222 Elm St');
+(100, '2024-11-30', 'Grayson', 'Russell', '1998-11-28', 'USA', 'grayson.russell@email.com', 'Illinois', '555-666-5555', 'Chicago', '60601', '222 Elm St'),
 
+/*query 11*/
+	(500, '2025-12-31', 'John', 'Doe', '1990-05-15', 'Canadian', 'john.doe@email.com', 'Ontario', '123-456-7890', 'Toronto', 'M5V 2G3', '123 Main St'),
+    (501, '2024-10-31', 'Jane', 'Smith', '1985-09-20', 'Canadian', 'jane.smith@email.com', 'British Columbia', '987-654-3210', 'Vancouver', 'V6B 3E3', '456 Elm St'),
+    (502, '2023-06-30', 'Michael', 'Lee', '1988-11-02', 'Korean', 'michael.lee@email.com', 'Alberta', '345-789-0123', 'Calgary', 'T2P 1J9', '789 Oak Ave'),
+    (503, '2026-05-31', 'Maria', 'Garcia', '1993-03-25', 'Mexican', 'maria.garcia@email.com', 'Quebec', '567-123-8901', 'Montreal', 'H3B 2Y5', '1010 Rue de la Gauchetière'),
+    (504, '2025-08-31', 'Robert', 'Johnson', '1977-12-10', 'Canadian', 'robert.johnson@email.com', 'Saskatchewan', NULL, 'Regina', 'S4P 0V5', '222 Victoria Ave'),
 
+/*Query 13*/
+	(505, '2025-10-31', 'Alice', 'Smith', '1992-07-15', 'Canadian', 'alice.smith@email.com', 'Ontario', '555-123-4567', 'Toronto', 'M4B 1V3', '789 Maple St'),
+    (506, '2023-09-30', 'Bob', 'Johnson', '1987-11-21', 'American', 'bob.johnson@email.com', 'New York', '444-789-1234', 'New York City', '10001', '123 Broadway Ave'),
+    (507, '2024-12-31', 'Ella', 'Garcia', '1990-04-05', 'Mexican', 'ella.garcia@email.com', 'California', '777-456-7890', 'Los Angeles', '90001', '456 Oak St'),
+    (508, '2023-08-15', 'David', 'Kim', '1985-12-10', 'Korean', 'david.kim@email.com', 'British Columbia', '333-987-6543', 'Vancouver', 'V6B 2G3', '789 Elm St'),
+    (509, '2026-05-31', 'Sophia', 'Martinez', '1995-03-17', 'Mexican', 'sophia.martinez@email.com', 'Quebec', '222-567-8901', 'Montreal', 'H3B 1C7', '1010 Rue de la Montagne');
 INSERT INTO Students (medicareNumber, studentID, facility_ID, grade) 
 VALUES 
       /*Ministry 1*/
@@ -389,10 +401,21 @@ VALUES
 (97, 47, 'Teacher', 'Physics', 'Additional Role 47'),
 (98, 48, 'Teacher', 'Computer Science', 'Additional Role 48'),
 (99, 49, 'Teacher', 'Geography', 'Additional Role 49'),
-(100, 50, 'Teacher', 'Economics', 'Additional Role 50');
+(100, 50, 'Teacher', 'Economics', 'Additional Role 50'),
 
-/***/
+/*Query 11*/
+(500, 500, 'Teacher', 'Economics', 'Additional Role 50'),
+(501, 501, 'Teacher', 'Economics', 'Additional Role 50'),
+(502, 502, 'Teacher', 'Economics', 'Additional Role 50'),
+(503, 503, 'Teacher', 'Economics', 'Additional Role 50'),
+(504, 504, 'Teacher', 'Economics', 'Additional Role 50'),
 
+/*Query 13*/
+(505, 505, 'Teacher', 'Mathematics', NULL),
+(506, 506, 'Teacher', 'Mathematics', NULL),
+(507, 507, 'Teacher', 'Mathematics', NULL),
+(508, 508, 'Teacher', 'Mathematics', NULL),
+(509, 509, 'Teacher', 'Mathematics', NULL);
 INSERT INTO Infections (infectionID, type)
 VALUES 
 (1, 'COVID-19'),
@@ -407,7 +430,7 @@ VALUES
 (10, 'Hepatitis B');
 
 INSERT INTO InfectedBy (medicareNumber, infectionID, dateInfected)
-VALUES /*
+VALUES 
 (1, 1, '2023-07-01'),
 (3, 1, '2023-07-02'),
 (5, 1, '2023-07-03'),
@@ -428,9 +451,17 @@ VALUES /*
 (81, 1, '2023-07-06'),
 (83, 1, '2023-07-07'),
 (85, 1, '2023-07-08'),
-(87, 1, '2023-07-09'),*/
+(87, 1, '2023-07-09'),
 (89, 1, '2023-07-31'),
-(89, 1, '2023-07-30');    
+(89, 1, '2023-07-30'),  
+
+/*Query 11*/
+(500, 1, '2023-08-03'),
+(501, 1, '2023-08-03'),
+(502, 1, '2023-08-03'),
+(503, 1, '2023-08-03'),
+(504, 1, '2023-08-03');
+
 INSERT INTO Vaccines (vaccineID, type)
 VALUES 
 (1, 'Pfizer'),
@@ -464,241 +495,59 @@ INSERT INTO EmployeeSchedule (employee_ID, facility_ID, task, startTime, endTime
 VALUES 
 /*query 10*/
 (1, 1, 'Presides', '2023-07-30 08:00:00', '2023-07-30 17:00:00'),
-(1, 1, 'Presides', '2023-07-31 08:00:00', '2023-07-31 17:00:00');
+(1, 1, 'Presides', '2023-07-31 08:00:00', '2023-07-31 17:00:00'),
 
+/*Query 11*/
+(500, 3, 'Teaching', '2023-08-06 08:00:00', '2023-08-06 11:00:00'),
+(501, 3, 'Teaching', '2023-08-06 09:30:00', '2023-08-06 12:30:00'),
+(502, 3, 'Teaching', '2023-08-06 12:00:00', '2023-08-06 14:00:00'),
+(503, 7, 'Teaching', '2023-08-06 14:30:00', '2023-08-06 17:30:00'),
+(504, 7, 'Teaching', '2023-08-06 10:00:00', '2023-08-06 13:00:00'),
+
+/*Query 13*/
+(505, 3, 'Teaching', '2023-08-06 08:00:00', '2023-08-06 11:00:00'),
+(506, 3, 'Teaching', '2023-08-06 09:30:00', '2023-08-06 12:30:00'),
+(507, 3, 'Teaching', '2023-08-06 12:00:00', '2023-08-06 14:00:00'),
+(508, 7, 'Teaching', '2023-08-06 14:30:00', '2023-08-06 17:30:00'),
+(509, 7, 'Teaching', '2023-08-06 10:00:00', '2023-08-06 13:00:00');
+    
+    /**/
 INSERT INTO LogEmail (date, facility_ID, employee_ID, subject, body)
 VALUES 
 ('2023-07-30', 1, 1, 'Schedule', 'Dear Employee, Just a quick update on the ongoing project.'),
-('2023-07-31', 4, 2, 'Schedule', 'Dear Employee, Just a quick update on the ongoing project.');
+('2023-07-31', 4, 2, 'Schedule', 'Dear Employee, Just a quick update on the ongoing project.'),
 
-/*Queries*/
-/*Q1*/
-/*get the province name where the ministry is located and the name of the minister of education for each ministry*/
-SELECT m.ministry_ID, m.name, f.province, CONCAT(c.firstName, ' ', c.lastName) AS 'Minister of Education'
-FROM Ministries m
-JOIN Facilities f ON m.ministry_ID = f.ministry_ID
-JOIN Employees e ON e.facility_ID = f.facility_ID
+/*Query 12*/
+('2023-07-31', 3, 500, 'Schedule', 'Dear Employee, Just a quick update on the ongoing project.'),
+('2023-07-31', 3, 501, 'Schedule', 'Dear Employee, Just a quick update on the ongoing project.'),
+('2023-07-31', 3, 502, 'Schedule', 'Dear Employee, Just a quick update on the ongoing project.'),
+('2023-07-31', 3, 503, 'Schedule', 'Dear Employee, Just a quick update on the ongoing project.'),
+('2023-07-31', 3, 504, 'Schedule', 'Dear Employee, Just a quick update on the ongoing project.');
+/*Q11 Get details of all the teachers who have been infected by COVID-19 in the past two weeks*/
+SELECT c.medicareNumber, c.firstName, c.lastName, ib.dateInfected, f.name AS 'Facility Name'
+FROM Facilities f
+JOIN EmployeeSchedule es ON es.facility_ID = f.facility_ID
+JOIN Employees e ON e.employee_ID = es.employee_ID
 JOIN Citizens c ON c.medicareNumber = e.medicareNumber
+JOIN InfectedBy ib ON ib.medicareNumber = c.medicareNumber
+JOIN Infections i ON i.infectionID = ib.infectionID
 WHERE 
-	f.facilityType = 'Management' AND f.subType = 'Head office'
-    AND e.role = 'President';
+    e.role = 'Teacher' AND
+    ib.dateInfected >= DATE_SUB(CURDATE(), INTERVAL 2 WEEK) AND
+    i.type = 'COVID-19'
+ORDER BY f.name, c.firstName;
 
-/*the number of facilities within the ministry*/    
-SELECT m.ministry_ID, m.name, COUNT(*) AS 'Number of facilities'
+/*Q12 List the emails generated by a given facility. The results should be displayed in ascending order by the date of the emails.*/
+SELECT *
+FROM LogEmail
+WHERE facility_ID = 3
+ORDER BY date ASC;
+
+/*Q13 For a given facility, generate a list of all the teachers who have been on schedule to work in the last two weeks.*/
+SELECT f.facility_ID, f.name AS 'Facility Name', c.medicareNumber, c.firstName, c.lastName, f.subType AS 'Role'
 FROM Facilities f
-JOIN Ministries m ON m.ministry_ID = f.ministry_ID
-GROUP BY ministry_ID;
-
-/*the total number of employees currently working for all the facilities in the ministry*/
-SELECT m.ministry_ID, m.name, COUNT(*) AS 'Number of employees'
-FROM Employees e
-JOIN Facilities f ON e.facility_ID = f.facility_ID
-JOIN Ministries m ON f.ministry_ID = m.ministry_ID
-GROUP BY m.ministry_ID;
-
-/*the total number of students currently registered in the schools within the ministry*/
-SELECT m.ministry_ID, m.name, COUNT(*) AS 'Number of students'
-FROM Students s
-JOIN Facilities f ON s.facility_ID = f.facility_ID
-JOIN Ministries m ON f.ministry_ID = m.ministry_ID  
-GROUP BY m.ministry_ID;
-
-/*Q1 all queries in one*/
-SELECT 
-    m.ministry_ID, 
-    m.name, 
-    f.province, 
-    CONCAT(c.firstName, ' ', c.lastName) AS 'Minister of Education',
-    (SELECT COUNT(*) FROM Facilities f2 WHERE f2.ministry_ID = m.ministry_ID) AS 'Number of facilities',
-    (SELECT COUNT(*) FROM Employees e2 
-     JOIN Facilities f2 ON e2.facility_ID = f2.facility_ID 
-     WHERE f2.ministry_ID = m.ministry_ID) AS 'Number of employees',
-    (SELECT COUNT(*) FROM Students s2 
-     JOIN Facilities f2 ON s2.facility_ID = f2.facility_ID 
-     WHERE f2.ministry_ID = m.ministry_ID) AS 'Number of students'
-FROM 
-    Ministries m
-    JOIN Facilities f ON m.ministry_ID = f.ministry_ID
-    JOIN Employees e ON e.facility_ID = f.facility_ID
-    JOIN Citizens c ON c.medicareNumber = e.medicareNumber
-WHERE 
-	f.facilityType = 'Management' AND f.subType = 'Head office'
-    AND e.role = 'President'
-ORDER BY (SELECT COUNT(*) FROM Facilities f2 WHERE f2.ministry_ID = m.ministry_ID) DESC;
-
-/*Q2*/
-/*For every educational facility in the city of Montréal, find the facility name*/
-SELECT f.facility_ID, f.city, f.facilityType, f.name
-FROM Facilities f
-WHERE f.city = 'Montreal' AND f.facilityType = 'Education'
-ORDER BY f.name ASC;
-
-/*For every educational facility in the city of Montréal, find the total number of teachers currently working */
-SELECT f.facility_ID, f.city, f.facilityType, f.name, COUNT(*) AS 'Number of Employees'
-FROM Employees e
-JOIN Facilities f ON e.facility_ID = f.facility_ID
-WHERE f.city = 'Montreal' AND f.facilityType = 'Education' AND e.role = 'Teacher'
-GROUP BY f.facility_ID
-ORDER BY f.name ASC;
-
-/*For every educational facility in the city of Montréal, find the total number of students currently registered*/
-SELECT f.facility_ID, f.city, f.facilityType, f.name,  COUNT(*) AS 'Number of Students'
-FROM Students s
-JOIN Facilities f ON s.facility_ID = f.facility_ID
-WHERE f.city = 'Montreal' AND f.facilityType = 'Education'
-GROUP BY facility_ID
-ORDER BY f.name ASC;
-
-/*For every educational facility in the city of Montréal, find the total number of the total number of teachers who got infected by COVID-19*/
-SELECT f.facility_ID, f.city, f.facilityType, f.name,  COUNT(*) AS 'Number of teachers Infected'
-FROM InfectedBy ib
-JOIN Citizens c ON ib.medicareNumber = c.medicareNumber
-JOIN Employees e ON c.medicareNumber = e.medicareNumber
-JOIN Facilities f ON e.facility_ID = f.facility_ID
-WHERE f.city = 'Montreal' AND f.facilityType = 'Education' AND e.role = 'Teacher'
-GROUP BY facility_ID
-ORDER BY f.name ASC;
-
-/*For every educational facility in the city of Montréal, find the total number of students who got infected by COVID-19*/
-SELECT f.facility_ID, f.city, f.facilityType, f.name,  COUNT(*) AS 'Number of students Infected'
-FROM InfectedBy ib
-JOIN Citizens c ON ib.medicareNumber = c.medicareNumber
-JOIN Students s ON c.medicareNumber = s.medicareNumber
-JOIN Facilities f ON s.facility_ID = f.facility_ID
-WHERE f.city = 'Montreal' AND f.facilityType = 'Education'
-GROUP BY facility_ID
-ORDER BY f.name ASC;
-
-/*For every educational facility in the city of Montréal, find the total number of teachers who got vaccinated by at least one dose*/
-SELECT f.facility_ID, f.city, f.facilityType, f.name,  COUNT(*) AS 'Number of teachers vaccinated(at least one dose)'
-FROM TookVaccine tv
-JOIN Citizens c ON tv.medicareNumber = c.medicareNumber
-JOIN Employees e ON c.medicareNumber = e.medicareNumber
-JOIN Facilities f ON e.facility_ID = f.facility_ID
-WHERE f.city = 'Montreal' AND f.facilityType = 'Education' AND e.role = 'Teacher'
-GROUP BY facility_ID
-ORDER BY f.name ASC;
-
-/*For every educational facility in the city of Montréal, find the total number of students who got vaccinated by at least one dose*/
-SELECT f.facility_ID, f.city, f.facilityType, f.name,  COUNT(*) AS 'Number of students vaccinated(at least one dose)'
-FROM TookVaccine tv
-JOIN Citizens c ON tv.medicareNumber = c.medicareNumber
-JOIN Students s ON c.medicareNumber = s.medicareNumber
-JOIN Facilities f ON s.facility_ID = f.facility_ID
-WHERE f.city = 'Montreal' AND f.facilityType = 'Education'
-GROUP BY facility_ID
-ORDER BY f.name ASC;
-
--- QUERY #3
-SELECT c.firstName, c.lastName, c.birthDate, c.medicareNumber, c.expiryDate, c.phone, c.email 
-	FROM Citizens c
-		JOIN Students s ON s.medicareNumber = c.medicareNumber 
-			AND s.facility_id = (SELECT facility_id FROM Facilities WHERE name = 'Rosemont')
-				AND c.expiryDate < NOW()
-		JOIN InfectedBy i ON i.medicareNumber = c.medicareNumber AND i.infectionID = (SELECT infectionID FROM Infections WHERE type = 'COVID-19')
-		ORDER BY c.expiryDate ASC; 
-
--- QUERY #4
-SELECT s.medicareNumber as Medicare, c.firstName, c.lastName,c.birthDate, i1.dateInfected, inf1.type, c.email, c.phone
-FROM
-    Facilities f
-	JOIN Students s ON s.facility_ID = f.facility_ID
-	JOIN Citizens c ON c.medicareNumber = s.medicareNumber
-	JOIN InfectedBy i1 ON i1.medicareNumber = c.medicareNumber
-	JOIN Infections inf1 ON inf1.infectionID = i1.infectionID
-	LEFT JOIN InfectedBy i2 ON i1.medicareNumber = i2.medicareNumber
-					 AND i1.infectionInstanceID <> i2.infectionInstanceID
-					 AND i2.dateInfected <= CURDATE()
-					 AND i2.dateInfected >= CURDATE() - INTERVAL 14 DAY
-	LEFT JOIN Infections inf2 ON i2.infectionID = inf2.infectionID
-	WHERE
-		f.city = 'Laval'
-		AND i1.dateInfected <= CURDATE()
-		AND i1.dateInfected >= CURDATE() - INTERVAL 14 DAY
-		AND i2.infectionInstanceID IS NOT NULL
-	ORDER BY c.firstName ASC, c.lastName ASC, i1.dateInfected ASC;
-
-/*Q5*/
-SELECT MIN(M.name) AS ministry_name,
-       F.name AS facility_name,
-       F.city,
-       C.firstName,
-       C.lastName,
-       C.email
-FROM Facilities F
-JOIN Ministries M ON F.ministry_ID = M.ministry_ID
-JOIN Employees E ON E.facility_ID = F.facility_ID 
-JOIN Citizens C ON E.medicareNumber = C.medicareNumber
-LEFT JOIN InfectedBy I ON C.medicareNumber = I.medicareNumber
-WHERE I.infectionID IS NOT NULL 
-AND C.medicareNumber NOT IN (SELECT medicareNumber FROM TookVaccine WHERE vaccineID IS NOT NULL)
-GROUP BY F.facility_ID, C.medicareNumber
-ORDER BY ministry_name ASC, F.city ASC, facility_name ASC;
-
-
-/*Q6*/
-SELECT distinct MIN(M.name) AS ministry_name,
-       F.facility_ID,
-       F.name AS facility_name,
-       F.city,
-	   CONCAT(C.firstName, ' ', C.lastName) AS 'Principle'
-FROM Facilities F
-JOIN Ministries M ON F.ministry_ID = M.ministry_ID
-LEFT JOIN Employees E ON E.facility_ID = F.facility_ID
-LEFT JOIN Citizens C ON E.medicareNumber = C.medicareNumber
-LEFT JOIN Students S ON F.facility_ID = S.facility_ID
-LEFT JOIN InfectedBy I ON E.medicareNumber = I.medicareNumber
-LEFT JOIN InfectedBy I2 ON S.medicareNumber = I2.medicareNumber
-WHERE I.infectionID IS NULL AND I2.infectionID IS NULL
-GROUP BY F.facility_ID, F.name, F.city, C.firstName, C.lastName
-ORDER BY ministry_name ASC, F.city ASC, facility_name ASC;
-
--- 7 - For every vaccine type, give the total number of doses taken by students in the 
--- system. Display results sorted in descending order by total number of doses.
-
-SELECT
-    v.type AS vaccine_type,
-    COUNT(tv.vaccineInstanceID) AS total_doses_taken
-FROM
-    Vaccines v
-JOIN
-    TookVaccine tv ON v.vaccineID = tv.vaccineID
-JOIN
-    Students s ON tv.medicareNumber = s.medicareNumber
-GROUP BY
-    v.type
-ORDER BY
-    total_doses_taken DESC;
-
--- 8 - For every infection type in the system, give the total number of students infected 
--- by that type in each ministry. Results should be displayed sorted in ascending order 
--- by infection type, then in descending order by total number of infections
-
-SELECT 
-    i.type AS infection_type,
-    m.name AS ministry_name,
-    IFNULL(total_infections, 0) AS total_infections
-FROM 
-    Infections i
-CROSS JOIN Ministries m
-LEFT JOIN ( -- infections in each ministry and infection type
-    SELECT 
-        f.ministry_ID,
-        i.type,
-        COUNT(*) AS total_infections
-    FROM 
-        InfectedBy ib
-    INNER JOIN Students s ON ib.medicareNumber = s.medicareNumber
-    INNER JOIN Facilities f ON s.facility_ID = f.facility_ID
-    INNER JOIN Infections i ON ib.infectionID = i.infectionID
-    GROUP BY 
-        f.ministry_ID,
-        i.type
-) AS infections_per_ministry ON m.ministry_ID = infections_per_ministry.ministry_ID AND i.type = infections_per_ministry.type
-ORDER BY 
-    i.type ASC,
-    total_infections DESC;
-
--- left join: all rows of left table [x] rows in right that are in left table
--- because we want every scenario so:
--- Infections with No infection instance records /  Ministries with No Infections/ Infections with No Stude
+JOIN EmployeeSchedule es ON es.facility_Id = f.facility_ID
+JOIN Employees e ON e.employee_ID = es.employee_ID
+JOIN Citizens c ON c.medicareNumber = e.medicareNumber
+WHERE f.facility_ID = 3 AND e.role = 'Teacher' AND es.startTime >= DATE_SUB(CURDATE(), INTERVAL 2 WEEK) AND es.startTime <= current_time()
+ORDER BY f.subType, c.firstName
