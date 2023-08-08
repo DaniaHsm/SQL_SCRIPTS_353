@@ -119,9 +119,10 @@ FOREIGN KEY (vaccineID) REFERENCES Vaccines(vaccineID)
 
 /*Atler tables(When modifications are needed*/
 /*
+
 DROP TABLE EmployeeSchedule;
 DROP TABLE Email;
-DROP TABLE logEmail;
+DROP TABLE LogEmail;
 DROP TABLE Employees;
 DROP TABLE Students;
 DROP TABLE Facilities;
@@ -304,18 +305,30 @@ VALUES
 (100, '2024-11-30', 'Grayson', 'Russell', '1998-11-28', 'USA', 'grayson.russell@email.com', 'Illinois', '555-666-5555', 'Chicago', '60601', '222 Elm St'),
 
 /*query 11*/
-	(500, '2025-12-31', 'John', 'Doe', '1990-05-15', 'Canadian', 'john.doe@email.com', 'Ontario', '123-456-7890', 'Toronto', 'M5V 2G3', '123 Main St'),
-    (501, '2024-10-31', 'Jane', 'Smith', '1985-09-20', 'Canadian', 'jane.smith@email.com', 'British Columbia', '987-654-3210', 'Vancouver', 'V6B 3E3', '456 Elm St'),
-    (502, '2023-06-30', 'Michael', 'Lee', '1988-11-02', 'Korean', 'michael.lee@email.com', 'Alberta', '345-789-0123', 'Calgary', 'T2P 1J9', '789 Oak Ave'),
-    (503, '2026-05-31', 'Maria', 'Garcia', '1993-03-25', 'Mexican', 'maria.garcia@email.com', 'Quebec', '567-123-8901', 'Montreal', 'H3B 2Y5', '1010 Rue de la Gauchetière'),
-    (504, '2025-08-31', 'Robert', 'Johnson', '1977-12-10', 'Canadian', 'robert.johnson@email.com', 'Saskatchewan', NULL, 'Regina', 'S4P 0V5', '222 Victoria Ave'),
+(500, '2025-12-31', 'John', 'Doe', '1990-05-15', 'Canadian', 'john.doe@email.com', 'Ontario', '123-456-7890', 'Toronto', 'M5V 2G3', '123 Main St'),
+(501, '2024-10-31', 'Jane', 'Smith', '1985-09-20', 'Canadian', 'jane.smith@email.com', 'British Columbia', '987-654-3210', 'Vancouver', 'V6B 3E3', '456 Elm St'),
+(502, '2023-06-30', 'Michael', 'Lee', '1988-11-02', 'Korean', 'michael.lee@email.com', 'Alberta', '345-789-0123', 'Calgary', 'T2P 1J9', '789 Oak Ave'),
+(503, '2026-05-31', 'Maria', 'Garcia', '1993-03-25', 'Mexican', 'maria.garcia@email.com', 'Quebec', '567-123-8901', 'Montreal', 'H3B 2Y5', '1010 Rue de la Gauchetière'),
+(504, '2025-08-31', 'Robert', 'Johnson', '1977-12-10', 'Canadian', 'robert.johnson@email.com', 'Saskatchewan', NULL, 'Regina', 'S4P 0V5', '222 Victoria Ave'),
 
 /*Query 13*/
-	(505, '2025-10-31', 'Alice', 'Smith', '1992-07-15', 'Canadian', 'alice.smith@email.com', 'Ontario', '555-123-4567', 'Toronto', 'M4B 1V3', '789 Maple St'),
-    (506, '2023-09-30', 'Bob', 'Johnson', '1987-11-21', 'American', 'bob.johnson@email.com', 'New York', '444-789-1234', 'New York City', '10001', '123 Broadway Ave'),
-    (507, '2024-12-31', 'Ella', 'Garcia', '1990-04-05', 'Mexican', 'ella.garcia@email.com', 'California', '777-456-7890', 'Los Angeles', '90001', '456 Oak St'),
-    (508, '2023-08-15', 'David', 'Kim', '1985-12-10', 'Korean', 'david.kim@email.com', 'British Columbia', '333-987-6543', 'Vancouver', 'V6B 2G3', '789 Elm St'),
-    (509, '2026-05-31', 'Sophia', 'Martinez', '1995-03-17', 'Mexican', 'sophia.martinez@email.com', 'Quebec', '222-567-8901', 'Montreal', 'H3B 1C7', '1010 Rue de la Montagne');
+(505, '2025-10-31', 'Alice', 'Smith', '1992-07-15', 'Canadian', 'alice.smith@email.com', 'Ontario', '555-123-4567', 'Toronto', 'M4B 1V3', '789 Maple St'),
+(506, '2023-09-30', 'Bob', 'Johnson', '1987-11-21', 'American', 'bob.johnson@email.com', 'New York', '444-789-1234', 'New York City', '10001', '123 Broadway Ave'),
+(507, '2024-12-31', 'Ella', 'Garcia', '1990-04-05', 'Mexican', 'ella.garcia@email.com', 'California', '777-456-7890', 'Los Angeles', '90001', '456 Oak St'),
+(508, '2023-08-15', 'David', 'Kim', '1985-12-10', 'Korean', 'david.kim@email.com', 'British Columbia', '333-987-6543', 'Vancouver', 'V6B 2G3', '789 Elm St'),
+(509, '2026-05-31', 'Sophia', 'Martinez', '1995-03-17', 'Mexican', 'sophia.martinez@email.com', 'Quebec', '222-567-8901', 'Montreal', 'H3B 1C7', '1010 Rue de la Montagne'),
+
+(1000, '2025-10-31', 'John', 'Doe', '1990-05-15', 'Canadian', 'john.doe@email.com', 'Ontario', '555-123-4567', 'Toronto', 'M4B 1V3', '789 Maple St'),
+(1001, '2023-09-30', 'Jane', 'Smith', '1987-11-21', 'American', 'jane.smith@email.com', 'New York', '444-789-1234', 'New York City', '10001', '123 Broadway Ave'),
+(1002, '2024-12-31', 'Michael', 'Johnson', '1995-04-05', 'Canadian', 'michael.johnson@email.com', 'British Columbia', '777-456-7890', 'Vancouver', 'V6B 2G3', '789 Elm St'),
+(1003, '2023-08-15', 'Emily', 'Kim', '1985-12-10', 'Korean', 'emily.kim@email.com', 'California', '333-987-6543', 'Los Angeles', '90001', '456 Oak St'),
+(1004, '2026-05-31', 'Daniel', 'Martinez', '1992-03-17', 'Mexican', 'daniel.martinez@email.com', 'Quebec', '222-567-8901', 'Montreal', 'H3B 1C7', '1010 Rue de la Montagne'),
+(1005, '2026-05-31','John', 'Doe', '1985-02-15', 'Canadian', 'john.doe@email.com', 'Ontario', '1234567890', 'Toronto', 'M5H2N2', '123 Main St.'),
+(1006, '2026-05-31','Jane', 'Smith', '1987-05-20', 'Canadian', 'jane.smith@email.com', 'Ontario', '2345678901', 'Toronto', 'M5H2N3', '124 Main St.'),
+(1007, '2026-05-31','Alex', 'Johnson', '1990-10-10', 'Canadian', 'alex.johnson@email.com', 'Ontario', '3456789012', 'Toronto', 'M5H2N4', '125 Main St.'),
+(1008, '2026-05-31','Emily', 'Davis', '1992-12-05', 'Canadian', 'emily.davis@email.com', 'Ontario', '4567890123', 'Toronto', 'M5H2N5', '126 Main St.');
+
+
 INSERT INTO Students (medicareNumber, studentID, facility_ID, grade) 
 VALUES 
       /*Ministry 1*/
@@ -433,7 +446,19 @@ VALUES
 (506, 506, 'Teacher', 'Mathematics', NULL),
 (507, 507, 'Teacher', 'Mathematics', NULL),
 (508, 508, 'Teacher', 'Mathematics', NULL),
-(509, 509, 'Teacher', 'Mathematics', NULL);
+(509, 509, 'Teacher', 'Mathematics', NULL),
+
+(1000, 1000, 'Teacher', 'Economics', 'Counselor'),
+(1001, 1001, 'Teacher', 'Economics', 'Counselor'),
+(1002, 1002, 'Teacher', 'Economics', 'Counselor'),
+(1003, 1003, 'Teacher', 'Economics', 'Counselor'),
+(1004, 1004, 'Teacher', 'Economics', 'Counselor'),
+
+(1005, 1010, 'Teacher', 'Math', 'Head of Department'),
+(1006, 1011, 'Teacher', 'Science', 'Lab Manager'),
+(1007, 1012, 'Counselor', 'Student Affairs', 'Event Organizer'),
+(1008, 1013, 'Librarian', 'Library Management', 'Book Club Head');
+
 INSERT INTO Infections (infectionID, type)
 VALUES 
 (1, 'COVID-19'),
@@ -480,7 +505,26 @@ VALUES
 (503, 1, '2023-08-03'),
 (504, 1, '2023-08-03'),
 
-(500, 1, '2023-08-10');
+(500, 1, '2023-08-10'),
+
+(1000, 1, '2023-05-30'),
+(1000, 1, '2023-06-30'),
+(1000, 1, '2023-07-30'),
+(1001, 1, '2023-05-30'),
+(1001, 1, '2023-06-30'),
+(1001, 1, '2023-06-30'),
+(1002, 1, '2023-07-30'),
+(1002, 1, '2023-07-30'),
+(1002, 1, '2023-07-30'),
+(1003, 1, '2023-07-30'),
+(1003, 1, '2023-07-30'),
+(1003, 1, '2023-07-30'),
+(1004, 1, '2023-07-30'),
+(1004, 1, '2023-07-30'),
+(1004, 1, '2023-05-30'),
+(1004, 1, '2023-07-30');
+
+
 
 INSERT INTO Vaccines (vaccineID, type)
 VALUES 
@@ -539,10 +583,18 @@ VALUES
 (506, 3, 'Teaching', '2023-08-06 09:30:00', '2023-08-06 12:30:00'),
 (507, 3, 'Teaching', '2023-08-06 12:00:00', '2023-08-06 14:00:00'),
 (508, 7, 'Teaching', '2023-08-06 14:30:00', '2023-08-06 17:30:00'),
-(509, 7, 'Teaching', '2023-08-06 10:00:00', '2023-08-06 13:00:00');
+(509, 7, 'Teaching', '2023-08-06 10:00:00', '2023-08-06 13:00:00'),
 
+(1000, 3, 'Consulting', '2023-07-31 08:00:00', '2023-07-31 17:00:00'),
+(1001, 3, 'Consulting', '2023-08-01 09:30:00', '2023-08-01 18:30:00'),
+(1002, 6, 'Consulting', '2023-08-02 10:00:00', '2023-08-02 19:00:00'),
+(1003, 6, 'Consulting', '2023-08-03 11:15:00', '2023-08-03 20:15:00'),
+(1004, 6, 'Consulting', '2023-08-04 11:45:00', '2023-08-04 21:45:00'),
 
-
+(1010, 1, 'Teaching', '2023-07-05 08:00:00', '2023-07-05 15:00:00'),
+(1011, 1, 'Teaching', '2023-07-06 08:00:00', '2023-07-06 16:00:00'),
+(1012, 1, 'Guidance Session', '2023-07-07 09:00:00', '2023-07-07 17:00:00'),
+(1013, 1, 'Library Management', '2023-07-08 08:30:00', '2023-07-08 14:30:00');
     
     /**/
 INSERT INTO LogEmail (date, facility_ID, employee_ID, subject, body)
@@ -560,13 +612,22 @@ VALUES
 
 /*Query 8*/
 SELECT f.facility_ID,f.name, f.address, f.city, f.province, f.postalCode, f.phone,
- f.webAddress,f.facilityType, f.capacity,COUNT(DISTINCT es.employee_ID) AS CurrentEmployees
+ f.webAddress,f.facilityType, f.capacity, COUNT(DISTINCT es.employee_ID) AS CurrentEmployees
 FROM Facilities f
-JOIN EmployeeSchedule es ON es.facility_ID = f.facility_ID 
-JOIN Employees e ON es.employee_ID = e.employee_ID AND e.role = 'President' OR e.role = 'Principal'
-JOIN Citizens c ON c.medicareNumber = e.medicareNumber
-GROUP BY f.facility_ID
-HAVING MAX(es.startTime) >= CURDATE() - INTERVAL 7 DAY;
+LEFT JOIN EmployeeSchedule es ON es.facility_ID = f.facility_ID 
+LEFT JOIN Employees e ON es.employee_ID = e.employee_ID 
+LEFT JOIN Citizens c ON c.medicareNumber = e.medicareNumber
+GROUP BY    f.facility_ID,
+			f.name,
+			f.address,
+			f.city,
+			f.province,
+			f.postalCode,
+			f.phone,
+			f.webAddress,
+			f.facilityType,
+			f.capacity
+ORDER BY f.province, f.city, f.facilityType, CurrentEmployees ASC;
 
 /*Query 9 specific facility = 1, Justify them being current employees if they had a shift in the past week*/
 SELECT c.firstName, c.lastName,  MIN(es.startTime) AS FirstShift,c.birthDate, 
@@ -576,10 +637,14 @@ c.medicareNumber as Medicare, c.phone, c.address, c.city, c.province, c.zip,c.ci
         JOIN Citizens c ON e.medicareNumber = c.medicareNumber
         WHERE es.facility_ID = 1 
         GROUP BY e.medicareNumber
-        HAVING MAX(es.startTime)  >= CURDATE() - INTERVAL 7 DAY
         ORDER BY e.role ASC, c.firstName ASC, c.lastName ASC;
-
-
+        
+/*Query 10*/
+SELECT e.employee_ID,f.name,DAY(es.startTime) AS DAY,  es.startTime, es.endTime
+FROM EmployeeSchedule es
+JOIN Facilities f ON es.facility_ID = f.facility_ID
+JOIN Employees e ON e.employee_ID = es.employee_ID AND e.employee_ID = 500
+ORDER BY f.name ASC, DAY ASC, es.startTime ASC;
 
 /*Q11 Get details of all the teachers who have been infected by COVID-19 in the past two weeks*/
 SELECT c.medicareNumber, c.firstName, c.lastName, ib.dateInfected, f.name AS 'Facility Name'
@@ -610,7 +675,155 @@ JOIN Citizens c ON c.medicareNumber = e.medicareNumber
 WHERE f.facility_ID = 3 AND e.role = 'Teacher' AND es.startTime >= DATE_SUB(CURDATE(), INTERVAL 2 WEEK) AND es.startTime <= NOW()
 ORDER BY f.subType, c.firstName;
 
+/*Query 14*/
+ SELECT c.firstName,
+    c.lastName,
+    SUM(HOUR(TIMEDIFF(es.endTime, es.startTime))) AS totalHoursScheduled
+FROM
+    Citizens c
+JOIN
+    Employees e ON c.medicareNumber = e.medicareNumber
+JOIN
+    EmployeeSchedule es ON e.employee_ID = es.employee_ID
+JOIN
+    Facilities f ON es.facility_ID = f.facility_ID
+WHERE
+    f.name = 'NotreDame' 
+    AND es.startTime >= '2023-07-01'
+    AND es.endTime <= '2023-07-31'
+GROUP BY
+    c.firstName,
+    c.lastName
+ORDER BY
+    c.firstName ASC,
+    c.lastName ASC;
+    
+/*Query 15*/
+   SELECT  f.province,
+    f.name AS school_name,
+    f.capacity,
+    COUNT(DISTINCT CASE WHEN i.dateInfected >= DATE_SUB(CURDATE(), INTERVAL 2 WEEK) THEN es.employee_ID END) AS total_teachers_infected,
+    COUNT(DISTINCT CASE WHEN i.dateInfected >= DATE_SUB(CURDATE(), INTERVAL 2 WEEK) THEN s.medicareNumber END) AS total_students_infected
+FROM
+    Facilities f
+LEFT JOIN
+    EmployeeSchedule es ON f.facility_ID = es.facility_ID
+LEFT JOIN
+    Employees e ON es.employee_ID = e.employee_ID
+LEFT JOIN
+    InfectedBy i ON e.medicareNumber = i.medicareNumber
+LEFT JOIN
+    Students s ON f.facility_ID = s.facility_ID
+WHERE
+    f.facilityType = 'Education'
+GROUP BY
+    f.province,
+    f.name,
+    f.capacity
+ORDER BY
+    f.province ASC,
+    total_teachers_infected ASC;
+    
+/*Query 16 */
+SELECT
+    c.firstName AS minister_first_name,
+    c.lastName AS minister_last_name,
+    c.city AS minister_city,
+    COUNT(DISTINCT CASE WHEN f.facilityType = 'Management' THEN f.facility_ID END) AS total_management_facilities,
+    COUNT(DISTINCT CASE WHEN f.facilityType = 'Educational' THEN f.facility_ID END) AS total_educational_facilities
+FROM
+    Ministries m
+JOIN
+    Facilities f ON m.ministry_ID = f.ministry_ID
+JOIN
+    EmployeeSchedule es ON f.facility_ID = es.facility_ID
+JOIN
+    Employees e ON es.employee_ID = e.employee_ID
+JOIN
+    Citizens c ON e.medicareNumber = c.medicareNumber
+GROUP BY
+    m.ministry_ID,
+    c.firstName,
+    c.lastName,
+    c.city
+ORDER BY
+    c.city ASC,
+    total_educational_facilities DESC;
+
+/*Query 17*/
+SELECT
+    c.firstName AS minister_first_name,
+    c.lastName AS minister_last_name,
+    c.city AS minister_city,
+    COUNT(DISTINCT CASE WHEN f.facilityType = 'Management' THEN f.facility_ID END) AS total_management_facilities,
+    COUNT(DISTINCT CASE WHEN f.facilityType = 'Educational' THEN f.facility_ID END) AS total_educational_facilities
+FROM
+    Ministries m
+JOIN
+    Facilities f ON m.ministry_ID = f.ministry_ID
+JOIN
+    EmployeeSchedule es ON f.facility_ID = es.facility_ID
+JOIN
+    Employees e ON es.employee_ID = e.employee_ID
+JOIN
+    Citizens c ON e.medicareNumber = c.medicareNumber
+GROUP BY
+    m.ministry_ID,
+    c.firstName,
+    c.lastName,
+    c.city
+ORDER BY
+    c.city ASC,
+    total_educational_facilities DESC;
+
+SELECT
+	c.medicareNumber,
+    c.firstName,
+    c.lastName,
+    c.birthDate,
+    c.email,
+    f.subType AS 'Role',
+    MIN(es.startTime) AS first_day_of_work,
+    COUNT(ib.medicareNumber) AS total_infections,
+    SUM(DISTINCT HOUR(TIMEDIFF(es.endTime, es.startTime))) AS total_hours_scheduled
+FROM
+    Citizens c
+JOIN
+    Employees e ON c.medicareNumber = e.medicareNumber
+JOIN
+    EmployeeSchedule es ON e.employee_ID = es.employee_ID
+JOIN 
+	Facilities f ON f.facility_ID = es.facility_ID
+JOIN
+    InfectedBy ib ON c.medicareNumber = ib.medicareNumber
+JOIN 
+	Infections i ON i.infectionID = ib.infectionID
+WHERE
+    e.additionalRole = 'Counselor' AND
+    i.infectionID = 1
+GROUP BY
+	e.employee_ID,
+    c.firstName,
+    c.lastName,
+    c.birthDate,
+    c.email,
+    f.subType
+HAVING
+    COUNT(ib.medicareNumber) >= 3
+ORDER BY
+    e.role ASC,
+    c.firstName ASC,
+    c.lastName ASC;
+
+
+
 /*Q18 triggers*/
+/*Test when_teacher_infected
+	INSERT INTO InfectedBy (medicareNumber, infectionID, dateInfected)
+		VALUES 
+		(500, 1, '2023-08-11'),
+        (501, 1, '2023-08-11');
+*/
 DELIMITER //
 CREATE TRIGGER when_teacher_infected
 AFTER INSERT ON InfectedBy
@@ -713,8 +926,13 @@ END
 DELIMITER ;
 
 /*Q19 Requirements integrity*/
-
 /*Check is there are conflicting schedules*/
+
+/*Test when_conflicting_schedule
+	INSERT INTO EmployeeSchedule (employee_ID, facility_ID, task, startTime, endTime)
+	VALUES 
+	(500, 3, 'Teaching', '2023-08-10 09:00:00', '2023-08-10 12:00:00');
+*/
 DELIMITER //
 CREATE TRIGGER when_conflicting_schedule
 BEFORE INSERT ON EmployeeSchedule 
@@ -746,6 +964,7 @@ BEGIN
 END;
 //
 DELIMITER ;
+
 /*
 /*If an employee is scheduled for two different periods on the same day
 either at the same facility or at different facilities, 
@@ -757,20 +976,19 @@ FOR EACH ROW
 BEGIN
     DECLARE hourCount INT;
 
-	DECLARE lastEndTime DATETIME;
+	DECLARE newStartTime DATETIME;
+    DECLARE secondStartTime DATETIME;
 	DECLARE employee_ID INT;
-	DECLARE startTime DATETIME;
-	DECLARE endTime DATETIME;
 	DECLARE errorMessage VARCHAR(255);
 	DECLARE recordCount INT;
-	SET startTime = NEW.startTime;
-	SET endTime = NEW.endTime;
+	SET newStartTime = NEW.startTime;
+	SET secondStartTime = NEW.endTime;
 	SET employee_ID = new.employee_ID;
 
         -- Get the last end time of schedules on the same day
-        SELECT MAX(endTime)
-        INTO lastEndTime
-        FROM EmployeeSchedule
+        SELECT MAX(es.endTime)
+        INTO firstEndTime
+        FROM EmployeeSchedule es 
         WHERE employee_ID = NEW.employee_ID
             AND DATE(startTime) = DATE(NEW.startTime);
 
@@ -783,11 +1001,8 @@ END;
 //
 DELIMITER ;
 
-
 /*Q20*/
 /*Send email to all employees every sunday*/
-SET GLOBAL event_scheduler = ON;
-
 /* --Check if event is created--
 SELECT * FROM information_schema.events WHERE event_name = 'sunday_schedule';
 DROP EVENT IF EXISTS sunday_schedule;
