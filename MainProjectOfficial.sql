@@ -119,9 +119,10 @@ FOREIGN KEY (vaccineID) REFERENCES Vaccines(vaccineID)
 
 /*Atler tables(When modifications are needed*/
 /*
+
 DROP TABLE EmployeeSchedule;
 DROP TABLE Email;
-DROP TABLE logEmail;
+DROP TABLE LogEmail;
 DROP TABLE Employees;
 DROP TABLE Students;
 DROP TABLE Facilities;
@@ -820,7 +821,8 @@ ORDER BY
 /*Test when_teacher_infected
 	INSERT INTO InfectedBy (medicareNumber, infectionID, dateInfected)
 		VALUES 
-		(500, 1, '2023-08-11');
+		(500, 1, '2023-08-11'),
+        (501, 1, '2023-08-11');
 */
 DELIMITER //
 CREATE TRIGGER when_teacher_infected
