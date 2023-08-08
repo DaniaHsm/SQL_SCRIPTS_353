@@ -81,7 +81,8 @@ task VARCHAR(250),
 startTime DATETIME,
 endTime DATETIME,
 FOREIGN KEY (facility_ID) REFERENCES Facilities(facility_ID),
-FOREIGN KEY (employee_ID) REFERENCES Employees(employee_ID)
+FOREIGN KEY (employee_ID) REFERENCES Employees(employee_ID),
+CHECK (startTime < endTime)
 );
 
 CREATE TABLE Email (
@@ -134,6 +135,7 @@ DROP TRIGGER IF EXISTS when_teacher_infected;
 DROP PROCEDURE IF EXISTS emailPrincipal;
 DROP PROCEDURE IF EXISTS cancelAssignments;
 DROP EVENT IF EXISTS sunday_schedule;
+DROP TRIGGER IF EXISTS  when_conflicting_schedule;
 */
 /*Inserting rows*/
 INSERT INTO Ministries(name) 
@@ -446,7 +448,7 @@ VALUES
 (10, 'Hepatitis B');
 
 INSERT INTO InfectedBy (medicareNumber, infectionID, dateInfected)
-VALUES /*
+VALUES 
 (1, 1, '2023-07-01'),
 (3, 1, '2023-07-02'),
 (5, 1, '2023-07-03'),
@@ -471,12 +473,12 @@ VALUES /*
 (89, 1, '2023-07-31'),
 (89, 1, '2023-07-30'),  
 
-/*Query 11*//*
+/*Query 11*/
 (500, 1, '2023-08-03'),
 (501, 1, '2023-08-03'),
 (502, 1, '2023-08-03'),
 (503, 1, '2023-08-03'),
-(504, 1, '2023-08-03'),*/
+(504, 1, '2023-08-03'),
 
 (500, 1, '2023-08-10');
 
@@ -513,10 +515,10 @@ INSERT INTO EmployeeSchedule (employee_ID, facility_ID, task, startTime, endTime
 VALUES 
 
 /*Test procedure cancelAssingments*/
-(500, 3, 'Teaching', '2023-08-10 08:00:00', '2023-08-06 11:00:00'),
-(500, 3, 'Teaching', '2023-08-15 08:00:00', '2023-08-06 11:00:00'),
-(500, 3, 'Teaching', '2023-08-16 08:00:00', '2023-08-06 11:00:00'),
-(500, 3, 'Teaching', '2023-08-26 08:00:00', '2023-08-06 11:00:00'),
+(500, 3, 'Teaching', '2023-08-10 08:00:00', '2023-08-10 11:00:00'),
+(500, 3, 'Teaching', '2023-08-15 08:00:00', '2023-08-15 11:00:00'),
+(500, 3, 'Teaching', '2023-08-16 08:00:00', '2023-08-16 11:00:00'),
+(500, 3, 'Teaching', '2023-08-26 08:00:00', '2023-08-26 11:00:00'),
 
 /*Principal*/
 (11, 3, 'Principal', '2023-07-30 08:00:00', '2023-07-30 17:00:00'),
@@ -555,6 +557,30 @@ VALUES
 ('2023-07-31', 3, 503, 'Schedule', 'Dear Employee, Just a quick update on the ongoing project.'),
 ('2023-07-31', 3, 504, 'Schedule', 'Dear Employee, Just a quick update on the ongoing project.');
 
+
+/*Query 8*/
+SELECT f.facility_ID,f.name, f.address, f.city, f.province, f.postalCode, f.phone,
+ f.webAddress,f.facilityType, f.capacity,COUNT(DISTINCT es.employee_ID) AS CurrentEmployees
+FROM Facilities f
+JOIN EmployeeSchedule es ON es.facility_ID = f.facility_ID 
+JOIN Employees e ON es.employee_ID = e.employee_ID AND e.role = 'President' OR e.role = 'Principal'
+JOIN Citizens c ON c.medicareNumber = e.medicareNumber
+GROUP BY f.facility_ID
+HAVING MAX(es.startTime) >= CURDATE() - INTERVAL 7 DAY;
+
+/*Query 9 specific facility = 1, Justify them being current employees if they had a shift in the past week*/
+SELECT c.firstName, c.lastName,  MIN(es.startTime) AS FirstShift,c.birthDate, 
+c.medicareNumber as Medicare, c.phone, c.address, c.city, c.province, c.zip,c.citizenship, c.email
+	FROM EmployeeSchedule es 
+		JOIN Employees e ON es.employee_ID = e.employee_ID
+        JOIN Citizens c ON e.medicareNumber = c.medicareNumber
+        WHERE es.facility_ID = 1 
+        GROUP BY e.medicareNumber
+        HAVING MAX(es.startTime)  >= CURDATE() - INTERVAL 7 DAY
+        ORDER BY e.role ASC, c.firstName ASC, c.lastName ASC;
+
+
+
 /*Q11 Get details of all the teachers who have been infected by COVID-19 in the past two weeks*/
 SELECT c.medicareNumber, c.firstName, c.lastName, ib.dateInfected, f.name AS 'Facility Name'
 FROM Facilities f
@@ -585,7 +611,6 @@ WHERE f.facility_ID = 3 AND e.role = 'Teacher' AND es.startTime >= DATE_SUB(CURD
 ORDER BY f.subType, c.firstName;
 
 /*Q18 triggers*/
-
 DELIMITER //
 CREATE TRIGGER when_teacher_infected
 AFTER INSERT ON InfectedBy
@@ -607,8 +632,6 @@ BEGIN
     CALL emailPrincipal(medicareNumber, infectionID, dateInfected);
    CALL cancelAssignments(medicareNumber, dateInfected);
   END IF;
-  
-
 END;
 //
 DELIMITER ;
@@ -689,6 +712,77 @@ END
 //
 DELIMITER ;
 
+/*Q19 Requirements integrity*/
+
+/*Check is there are conflicting schedules*/
+DELIMITER //
+CREATE TRIGGER when_conflicting_schedule
+BEFORE INSERT ON EmployeeSchedule 
+FOR EACH ROW
+BEGIN
+    DECLARE employee_ID INT;
+	DECLARE startTime DATETIME;
+	DECLARE endTime DATETIME;
+    DECLARE errorMessage VARCHAR(255);
+    DECLARE recordCount INT;
+	SET startTime = NEW.startTime;
+	SET endTime = NEW.endTime;
+    SET employee_ID = new.employee_ID;
+    
+    /*Check if there are conflicting time schedules*/
+    SELECT COUNT(*)
+    INTO recordCount
+    FROM EmployeeSchedule es
+    WHERE es.employee_ID = employee_ID 
+		  AND  startTime >= es.startTime
+          AND  startTime <= es.endTime;
+    
+	-- Check your conditions and set error_message if needed
+    IF recordCount > 0
+    THEN
+        SET errorMessage = 'Cannot insert a conflicting schedule';
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = errorMessage;
+    END IF;
+END;
+//
+DELIMITER ;
+/*
+/*If an employee is scheduled for two different periods on the same day
+either at the same facility or at different facilities, 
+then at least one hour should be the duration between the first schedule and the second one.*/
+DELIMITER //
+CREATE TRIGGER check_schedule_1hour_break
+BEFORE INSERT ON EmployeeSchedule
+FOR EACH ROW
+BEGIN
+    DECLARE hourCount INT;
+
+	DECLARE lastEndTime DATETIME;
+	DECLARE employee_ID INT;
+	DECLARE startTime DATETIME;
+	DECLARE endTime DATETIME;
+	DECLARE errorMessage VARCHAR(255);
+	DECLARE recordCount INT;
+	SET startTime = NEW.startTime;
+	SET endTime = NEW.endTime;
+	SET employee_ID = new.employee_ID;
+
+        -- Get the last end time of schedules on the same day
+        SELECT MAX(endTime)
+        INTO lastEndTime
+        FROM EmployeeSchedule
+        WHERE employee_ID = NEW.employee_ID
+            AND DATE(startTime) = DATE(NEW.startTime);
+
+        -- Check if there's at least one hour of duration between schedules
+        IF TIMESTAMPDIFF(HOUR, lastEndTime, NEW.startTime) < 1 THEN
+            SIGNAL SQLSTATE '45000'
+            SET MESSAGE_TEXT = 'Cannot insert a schedule with less than one hour duration between periods on the same day';
+        END IF;
+END;
+//
+DELIMITER ;
+
 
 /*Q20*/
 /*Send email to all employees every sunday*/
@@ -718,7 +812,6 @@ BEGIN
     DECLARE emailSubject TEXT;
     DECLARE emailBody TEXT;
     DECLARE done INT DEFAULT FALSE;
-    DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
     
     /*Select all the schedule for the coming week*/
     DECLARE curs CURSOR FOR
@@ -728,6 +821,8 @@ BEGIN
     LEFT JOIN EmployeeSchedule es ON e.employee_ID = es.employee_ID
     JOIN Facilities f ON es.facility_ID = f.facility_ID
     WHERE es.startTime >= DATE_ADD(NOW(), INTERVAL 1 DAY) AND es.startTime <= DATE_ADD(NOW(), INTERVAL 1 WEEK);
+
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
 
 	SET nextMonday = DATE_ADD(NOW(), INTERVAL 1 DAY);
     SET nextSunday = DATE_ADD(NOW(), INTERVAL 1 WEEK);
@@ -745,9 +840,9 @@ BEGIN
             SET emailBody = 'You have no assignments for that week';
             /*Insert data in Email and logEmail table*/
             INSERT INTO Email (date, facility_ID, employee_ID, subject, body)
-            VALUES (NOW(), NULL, emp_id, emailSubject, emailBody);
+            VALUES (NOW(), NULL, emp_ID, emailSubject, emailBody);
             INSERT INTO LogEmail (date, facility_ID, employee_ID, subject, body)
-            VALUES (NOW(), NULL, emp_id, emailSubject, emailBody);
+            VALUES (NOW(), NULL, emp_ID, emailSubject, SUBSTRING(emailBody, 1, 80));
         END IF;
 		
         /*If schedule for the coming week*/
@@ -767,9 +862,9 @@ BEGIN
             
 			/*Insert data in Email and logEmail table*/
             INSERT INTO Email (date, facility_ID, employee_ID, subject, body)
-				VALUES (NOW(), facility, emp_id, emailSubject, emailBody);
+				VALUES (NOW(), facility_ID, emp_ID, emailSubject, emailBody);
             INSERT INTO LogEmail (date, facility_ID, employee_ID, subject, body)
-				VALUES (NOW(), NULL, emp_id, emailSubject, emailBody);
+				VALUES (NOW(), facility_ID, emp_ID, emailSubject, SUBSTRING(emailBody, 1, 80));
         END IF;     
     END LOOP loop_start;
 
@@ -781,7 +876,7 @@ DELIMITER ;
 /*Create the event to call the stored procedure every Sunday*/
 DELIMITER //
 CREATE EVENT sunday_schedule
-ON SCHEDULE EVERY 10 SECOND
+ON SCHEDULE EVERY 1 WEEK 
 DO
 BEGIN
 	CALL send_schedule_emails();
